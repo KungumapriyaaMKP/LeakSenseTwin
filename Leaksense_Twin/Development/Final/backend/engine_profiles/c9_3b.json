@@ -1,0 +1,80 @@
+{
+  "name": "Cat C9.3B",
+  "description": "C9.3B, 340 bkW (456 bhp) @ 2000 rpm, IND-D rating, single-turbo TA (Turbocharged-Aftercooled), DOC+DPF+SCR aftertreatment.",
+  "calibrated": true,
+  "notes": "Geometry, compression ratio, and the full torque/power curve (600-2200 rpm, 17 points) are transcribed verbatim from Caterpillar's published spec sheet (doc SS-11138191-1000022860-051: bore 115mm, stroke 149mm, displacement 9.3L, compression ratio 17.0:1, max torque 2088 N·m @ 1400 rpm, max power 340 kW @ 2000 rpm, single Turbocharged-Aftercooled aspiration -- confirmed NOT twin-turbo, unlike the C18). The compressor map, VE curve, and turbine map coefficients are NOT independently dyno-validated for this engine -- no public compressor map exists for either engine in this project. They are derived by scaling the C18 reference coefficients by this engine's displacement ratio (9.3/18.1 ~= 0.514) for the flow-dependent terms, since a smaller single-turbo engine moves proportionally less air at a given RPM. Treat compressor/turbine pressure-ratio outputs as engineering estimates, not measured data.",
+  "artifact_dir": "c9_3b",
+  "r_air": 287.0,
+  "cp_air": 1005.0,
+  "gamma": 1.4,
+  "map_ambient": 101.325,
+  "t_ambient_k": 298.15,
+  "torque_curve_rpm": [600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 2100, 2200],
+  "torque_curve_nm":  [901, 1121, 1340, 1487, 1633, 1780, 1882, 1985, 2088, 2014, 1945, 1873, 1804, 1709, 1623, 1514, 1415],
+  "fuel_qty_min": 60.0,
+  "fuel_qty_max": 160.0,
+  "intake": {
+    "displacement_L": 9.3,
+    "n_cylinders": 6,
+    "ve_base": 0.90,
+    "ve_rpm_peak": 1400.0,
+    "ve_quadratic_coeff": -1.2e-11,
+    "ve_clip_min": 0.75,
+    "ve_clip_max": 0.98
+  },
+  "charge_air": {
+    "turbo_eff_compressor": 0.76,
+    "cac_effectiveness": 0.86,
+    "compressor_coeffs": {"c00": 1.0, "c10": 0.0029, "c01": 0.0008, "c20": -7.6e-7, "c11": 9.7e-8, "c02": -1.5e-8},
+    "pr_clip_min": 1.0,
+    "pr_clip_max": 4.0,
+    "cac_dp_coeff": 0.0015,
+    "cac_duct_loss_kpa": 0.4,
+    "manifold_runner_loss_kpa": 1.2
+  },
+  "exhaust": {
+    "n_cylinders": 6,
+    "turbo_eff_turbine": 0.80,
+    "lhv_diesel": 42800.0,
+    "combustion_eff": 0.97,
+    "turbine_pr_const": 1.4,
+    "turbine_pr_rpm_coeff": 1.1,
+    "turbine_pr_maf_coeff": 0.7,
+    "turbine_rpm_norm": 2200.0,
+    "turbine_maf_norm": 620.0,
+    "turbine_pr_clip_min": 1.1,
+    "turbine_pr_clip_max": 3.5,
+    "dpf_dp_coeff": 2.5,
+    "dpf_dp_exponent": 1.8,
+    "t_exh_clip_min_k": 723.15,
+    "t_exh_clip_max_k": 1173.15,
+    "dpf_in_loss_k": 25.0,
+    "dpf_out_loss_k": 45.0
+  },
+  "operating_range": {
+    "rpm_min": 600,
+    "rpm_max": 2200,
+    "rpm_steps": 17
+  },
+  "zones": {
+    "n_zones": 6,
+    "zone_names": [
+      "No Leak / Healthy",
+      "Zone 1 — Intake (Airflow meter → Compressor inlet)",
+      "Zone 2 — Charge Air (Post-compressor → CAC inlet)",
+      "Zone 3 — CAC/Manifold (CAC → Intake manifold)",
+      "Zone 4 — Exhaust Manifold (Manifold → Turbo turbine)",
+      "Zone 5 — DPF/SCR (Aftertreatment system)",
+      "Zone 6 — Turbine Outlet / Pre-Aftertreatment (Turbo outlet → DPF inlet)"
+    ],
+    "action_map": {
+      "0": "System healthy - continue operation",
+      "1": "Inspect intake ducting between airflow meter and compressor inlet. Check hose clamps and silicone couplers.",
+      "2": "Check boost pipe connections between compressor outlet and CAC inlet. Inspect for cracked charge pipes.",
+      "3": "Inspect CAC-to-intake manifold connections. Check CAC end tanks and pipe clamps.",
+      "4": "Inspect exhaust manifold gaskets and V-band clamps. Check turbocharger turbine housing bolts.",
+      "5": "Inspect DPF/SCR connections. Check DOC mounting bolts and exhaust pipe V-bands.",
+      "6": "Inspect turbine outlet-to-DPF inlet ducting and joints. Check for cracked/loose pre-aftertreatment piping."
+    }
+  }
+}

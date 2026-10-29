@@ -1,0 +1,80 @@
+{
+  "name": "Cat C18",
+  "description": "C18 ACERT, 597 bkW (800 bhp) @ 2100 rpm, IND-E rating, DITA twin-turbo. Reference/default engine profile.",
+  "calibrated": true,
+  "notes": "Geometry, compression ratio, and the torque/power curve are transcribed verbatim from Caterpillar's published spec sheet (doc SS-9054178-18396700-062, exact match: compression ratio 16.3:1, max torque 3655 N·m @ 1400 rpm, max power 597 kW @ 2100 rpm). The compressor map polynomial, VE curve, and turbine map coefficients are engineering estimates consistent with a twin-turbo DITA arrangement -- not independently dyno-validated against this exact engine's compressor map.",
+  "artifact_dir": "c18",
+  "r_air": 287.0,
+  "cp_air": 1005.0,
+  "gamma": 1.4,
+  "map_ambient": 101.325,
+  "t_ambient_k": 298.15,
+  "torque_curve_rpm": [1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 2100],
+  "torque_curve_nm":  [2848, 3120, 3609, 3656, 3564, 3446, 3315, 3165, 2998, 2848, 2713],
+  "fuel_qty_min": 60.0,
+  "fuel_qty_max": 160.0,
+  "intake": {
+    "displacement_L": 18.1,
+    "n_cylinders": 6,
+    "ve_base": 0.92,
+    "ve_rpm_peak": 1400.0,
+    "ve_quadratic_coeff": -1.2e-11,
+    "ve_clip_min": 0.75,
+    "ve_clip_max": 0.98
+  },
+  "charge_air": {
+    "turbo_eff_compressor": 0.78,
+    "cac_effectiveness": 0.88,
+    "compressor_coeffs": {"c00": 1.0, "c10": 0.0015, "c01": 0.0008, "c20": -2.0e-7, "c11": 5.0e-8, "c02": -1.5e-8},
+    "pr_clip_min": 1.0,
+    "pr_clip_max": 4.5,
+    "cac_dp_coeff": 0.0012,
+    "cac_duct_loss_kpa": 0.5,
+    "manifold_runner_loss_kpa": 1.5
+  },
+  "exhaust": {
+    "n_cylinders": 6,
+    "turbo_eff_turbine": 0.82,
+    "lhv_diesel": 42800.0,
+    "combustion_eff": 0.97,
+    "turbine_pr_const": 1.5,
+    "turbine_pr_rpm_coeff": 1.2,
+    "turbine_pr_maf_coeff": 0.8,
+    "turbine_rpm_norm": 2100.0,
+    "turbine_maf_norm": 1200.0,
+    "turbine_pr_clip_min": 1.2,
+    "turbine_pr_clip_max": 4.0,
+    "dpf_dp_coeff": 2.5,
+    "dpf_dp_exponent": 1.8,
+    "t_exh_clip_min_k": 723.15,
+    "t_exh_clip_max_k": 1173.15,
+    "dpf_in_loss_k": 30.0,
+    "dpf_out_loss_k": 50.0
+  },
+  "operating_range": {
+    "rpm_min": 1100,
+    "rpm_max": 2100,
+    "rpm_steps": 11
+  },
+  "zones": {
+    "n_zones": 6,
+    "zone_names": [
+      "No Leak / Healthy",
+      "Zone 1 — Intake (Airflow meter → Compressor inlet)",
+      "Zone 2 — Charge Air (Post-compressor → CAC inlet)",
+      "Zone 3 — CAC/Manifold (CAC → Intake manifold)",
+      "Zone 4 — Exhaust Manifold (Manifold → Turbo turbine)",
+      "Zone 5 — DPF/SCR (Aftertreatment system)",
+      "Zone 6 — Turbine Outlet / Pre-Aftertreatment (Turbo outlet → DPF inlet)"
+    ],
+    "action_map": {
+      "0": "System healthy - continue operation",
+      "1": "Inspect intake ducting between airflow meter and compressor inlet. Check hose clamps and silicone couplers.",
+      "2": "Check boost pipe connections between compressor outlet and CAC inlet. Inspect for cracked charge pipes.",
+      "3": "Inspect CAC-to-intake manifold connections. Check CAC end tanks and pipe clamps.",
+      "4": "Inspect exhaust manifold gaskets and V-band clamps. Check turbocharger turbine housing bolts.",
+      "5": "Inspect DPF/SCR connections. Check DOC mounting bolts and exhaust pipe V-bands.",
+      "6": "Inspect turbine outlet-to-DPF inlet ducting and joints. Check for cracked/loose pre-aftertreatment piping."
+    }
+  }
+}
